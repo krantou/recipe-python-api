@@ -2,10 +2,12 @@
 Tests for models
 """
 
+from decimal import Decimal
 from django.test import TestCase
 # get_user_model helper fun, provided by django, ref to custom user model
 from django.contrib.auth import get_user_model
 
+from core import models
 
 class ModelTests(TestCase):
     def test_create_user_with_email_succssful(self):
@@ -47,3 +49,19 @@ class ModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_create_recipe(self):
+        '''Test create recipe successful'''
+        user   = get_user_model().objects.create_user(
+            'test@example.com',
+            'test87y2872y',
+        )
+
+        recipe = models.Recipe.objects.cretae(
+            user=user,
+            time_minutes=5,
+            price=Decimal('5.50'),
+            description='Sample recipe description.',
+        )
+
+        self.assertEqual(str(recipe), recipe.title)
