@@ -2,6 +2,7 @@
 Database models
 """
 
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -51,3 +52,31 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # feild used for authentication. replace default auth used by django
     USERNAME_FIELD = 'email'
+
+
+class Recipe(models.Model):
+    '''Recipe object'''
+    title = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    description = models.TextField(blank=True)
+    time_minutes = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    link = models.CharField(max_length=255, blank=True)
+    tags = models.ManyToManyField('Tag')
+
+    def __str__(self) -> str:
+        return self.title
+
+class Tag(models.Model):
+    '''Tags for filtering recipes'''
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self) -> str:
+        return self.name

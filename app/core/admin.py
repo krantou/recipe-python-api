@@ -50,3 +50,5 @@ class UserAdmin(BaseUseradmin):
 # we need to specify user admin so as to have the
 # customization we added above
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Recipe)
+admin.site.register(models.Tag)
