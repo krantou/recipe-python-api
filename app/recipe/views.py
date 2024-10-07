@@ -9,7 +9,7 @@ from rest_framework import (
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Recipe, Tag
+from core.models import (Recipe, Tag)
 from recipe import serializers
 
 class RecipeViewSet(viewsets.ModelViewSet):
